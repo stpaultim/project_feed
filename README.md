@@ -14,10 +14,12 @@ This modules is still very much in development. We welcome feedback and suggesti
 
 This module is somewhat a proof a concept and sandbox for possible features on BackdropCMS.org and/or another third party module info site.
 
-Coming Soon
+Coming Soon (ideas)
 -------------
 
-
+- Pulling in "tag" data from project .info file
+- Pulling in additional data about Releases
+- Pulling in additional download statistics
 
 Requirements
 ------------
@@ -55,24 +57,19 @@ Instructions:
 Issues
 ------
 
-Bugs and Feature Requests should be reported in the Issue Queue:
-https://github.com/backdrop-contrib/my_module/issues.
+- Keeping this in my personal repo for now. Feel free to post issues here.
 
 
 Current Maintainers
 -------------------
 
-- [Your Name](https://github.com/username)
-- Seeking additional maintainers
-
+- [Tim Erickson](https://github.com/stpaultim).
 
 Credits
 -------
 
-- Ported to Backdrop CMS by [Your Name](https://github.com/username).
-- Originally written for Drupal by [Someone Else](https://github.com/username).
-- Based on [Some Other project](https://github.com/example).
-- Sponsored by [An Organization](https://example.org).
+- Sponsored by [Simplo](https://www.simplo.site)
+- Valuable code snippet provided by [@BWPanda](https://github.com/BWPanda)
 
 
 License
