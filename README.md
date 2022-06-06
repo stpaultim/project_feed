@@ -31,15 +31,7 @@ per hour unless you are working with a [personal access token](https://docs.gith
 Installation
 ------------
 
-- Install this module using the official Backdrop CMS instructions at
-  https://docs.backdropcms.org/documentation/extend-with-modules.
-
-- Visit the configuration page under Administration > Configuration > Category >
-  My Module (admin/config/category/my_module) and enter the required
-  information.
-
-- Additional steps go here...
-
+-
 
 Documentation
 -------------
