@@ -1,28 +1,29 @@
-The Name of My Module
+Project Feed
 =====================
 
-My Module enables you to...
+This module pulls down contrib project data from Github and creates nodes
+in a Backdrop CMS website. 
 
-The first paragraph of this file should be kept short as it will be used as the
-project summary on BackdropCMS.org. Aim for about 240 characters (three lines at
-80 characters each).
+This module is a result of the discussion started here:
+https://github.com/backdrop-ops/backdropcms.org/issues/870
 
-All lines in this file should be no more than 80 characters long for legibility,
-unless including a URL or example that requires the line to not wrap. (The first
-line of this paragraph is 80 characters for reference.)
+And this module is very much inspired by the sample conde snippet provided
+by @BWPanda in that thread.
 
-Detail in READMEs should be limited to the minimum required for installation and
-getting started. More detailed documentation should be moved to a GitHub wiki
-page; for example: https://github.com/backdrop-contrib/setup/wiki/Documentation.
+This modules is still very much in development. We welcome feedback and suggestions and Pull Requests.
+
+This module is somewhat a proof a concept and sandbox for possible features on BackdropCMS.org and/or another third party module info site.
+
+Coming Soon
+-------------
+
 
 
 Requirements
 ------------
 
-This module requires that the following modules are also enabled:
-
-- [Example module](https://github.com/backdrop-contrib/example_module)
-- [Dummy library](https://github.com/backdrop-contrib/dummy_library)
+The Github API has [pretty strong limits](https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limit-http-headers) to how many requests you can make
+per hour unless you are working with a [personal access token](https://docs.github.com/en/rest/overview/other-authentication-methods).
 
 
 Installation
@@ -41,8 +42,14 @@ Installation
 Documentation
 -------------
 
-Additional documentation is located in the Wiki:
-https://github.com/backdrop-contrib/my_module/wiki/Documentation.
+This is still in development, but it does work. 
+
+Instructions:
+
+1) Enable the module
+2) Add Github User Name and Token here: admin/config/services/projects/settings
+3) Put something in the range of 10-30 in "Queries Per Pull" (This is inaccurate and will be fixed soon)
+4) Use this link to trigger a pull of projects: admin/config/services/projects/settings/pull_projects 
 
 
 Issues
