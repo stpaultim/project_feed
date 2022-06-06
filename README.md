@@ -1,8 +1,7 @@
 Project Feed
 =====================
 
-This module pulls down contrib project data from Github and creates nodes
-in a Backdrop CMS website. 
+This module pulls down contrib project data from Github and creates nodes in a Backdrop CMS website. In theory, code checks for existing node and only creates new nodes when none exist. Ability to update nodes is coming soon?
 
 This module is a result of the discussion started here:
 https://github.com/backdrop-ops/backdropcms.org/issues/870
@@ -20,6 +19,7 @@ Coming Soon (ideas)
 - Pulling in "tag" data from project .info file
 - Pulling in additional data about Releases
 - Pulling in additional download statistics
+- Ability to update nodes
 
 Requirements
 ------------
