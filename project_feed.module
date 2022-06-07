@@ -60,7 +60,7 @@ function project_feed_code() {
   // Putting config settings into variables.
   $pf_user_agent = $config->get('username');
   $pf_github_token = $config->get('github_auth_token');
-  $pf_queries_per_pull = $config->get('queries_per_pull');
+  $pf_projects_per_query = $config->get('projects_per_query');
 
   // Setting some variables 
   $projects_available = TRUE; // Turns false when all projects have been checked
@@ -72,8 +72,8 @@ function project_feed_code() {
 
   $project_name = 'project_list.csv';               
   $txt = '';
-  $file = file_save_data($txt,'public://' . "test.csv", FILE_EXISTS_REPLACE);
-  $txt = fopen('public://test.csv', 'w');
+  $file = file_save_data($txt,'public://' . "project-list.csv", FILE_EXISTS_REPLACE);
+  $txt = fopen('public://project-list.csv', 'w');
 
   // This while loop is grabbing batches of project data and checking to see if 
   // nodes already exist
@@ -82,7 +82,7 @@ function project_feed_code() {
 
     // Get information about Backdrop Contrib repos 
     // @TODO "queries per pull" should be "projects per query"
-    $ch = curl_init('https://api.github.com/orgs/backdrop-contrib/repos?per_page=' . $pf_queries_per_pull . '&page=' . $page_counter);
+    $ch = curl_init('https://api.github.com/orgs/backdrop-contrib/repos?per_page=' . $pf_projects_per_query . '&page=' . $page_counter);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
       'Accept: application/vnd.github.VERSION.raw',
       'User-Agent: ' . $pf_user_agent,
@@ -97,7 +97,7 @@ function project_feed_code() {
     // May not be necessary in future.
     $query_counter++;
 
-    if (!$repos || $query_counter > 5) {
+    if (!$repos || $query_counter > 1000) {
       $projects_available = FALSE;
     } 
 
@@ -160,7 +160,7 @@ function project_feed_code() {
         $data[$repo['name']]['tags'] = '';
       }
       if (isset($info['recommends'])) {
-        $data[$repo['name']]['tags'] = $info['recommends'];
+        $data[$repo['name']]['recommends'] = $info['recommends'];
       } else {
         $data[$repo['name']]['recommends'] = '';
       }
@@ -170,7 +170,7 @@ function project_feed_code() {
         $data[$repo['name']]['screenshot'] = '';
       }
       if (isset($info['dependencies'])) {
-        $data[$repo['name']]['backdrop'] = $info['dependencies'];
+        $data[$repo['name']]['dependencies'] = $info['dependencies'];
       } else {
         $data[$repo['name']]['dependencies'] = '';
       }
@@ -223,6 +223,8 @@ function project_feed_code() {
     }
   }
   fclose($txt);
+
+  backdrop_set_message('Projects data from Github has been written to CSV file. Import coming soon.', 'info');
 }
 
 // Check for releases
@@ -248,5 +250,3 @@ function project_feed_check_releases($var) {
   $var = count($release_info);
   return($var);
 }
-
-
