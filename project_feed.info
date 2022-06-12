@@ -17,6 +17,7 @@ dependencies[] = feeds_ui
 dependencies[] = feeds_import
 dependencies[] = job_scheduler
 dependencies[] = feeds_tamper
+dependencies[] = feeds_tamper_ui
 dependencies[] = views_conditional
 
 

@@ -129,7 +129,7 @@ function project_feed_code($var) {
 
     // Get information about Backdrop Contrib repos 
     // @TODO "queries per pull" should be "projects per query"
-    $ch = curl_init('https://api.github.com/orgs/backdrop-contrib/repos?per_page=43&page=' . $page_counter);
+    $ch = curl_init('https://api.github.com/orgs/backdrop-contrib/repos?per_page=20&page=' . $page_counter);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
       'Accept: application/vnd.github.VERSION.raw',
       'User-Agent: ' . $pf_user_agent,
@@ -143,7 +143,7 @@ function project_feed_code($var) {
     // Originally used to limit the number of queries during testing
     // May not be necessary in future.
 
-    if (!$repos || $query_counter > 3) {
+    if (!$repos || $query_counter > 1) {
       $projects_available = FALSE;
     } 
 
@@ -196,8 +196,8 @@ function project_feed_code($var) {
       // Check and count open issues and report back
       if (isset($repo['issues_url'])) {
         $var = $repo['name'];
-        $pulls = project_feed_check_issues($var);
-        $data[$repo['name']]['issues'] = $pulls;
+        $issues = project_feed_check_issues($var);
+        $data[$repo['name']]['issues'] = $issues;
       } 
 
       // Pulls data from .info file into array for new node.
@@ -262,14 +262,13 @@ function project_feed_code($var) {
         $field_project_type = $term_tid[0];
       }
       if (!empty($value['tags'])) {
-        $tag_list = implode(', ' ,$value['tags']);
+        $tag_list = implode(',' ,$value['tags']);
       }
       if (!empty($value['dependencies'])) {
-        dpm($value['dependencies']);
-        $dependency_list = implode(', ' ,$value['dependencies']);
+        $dependency_list = implode(',' ,$value['dependencies']);
       }
       if (!empty($value['recommends'])) {
-        $recommend_list = implode(', ' ,$value['recommends']);
+        $recommend_list = implode(',' ,$value['recommends']);
       }
       $project = array(
         'title' => $value['title'],

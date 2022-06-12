@@ -135,7 +135,8 @@
                                 "weight": 0,
                                 "disabled": false
                             }
-                        }
+                        },
+                        "language": "und"
                     },
                     {
                         "source": "recommends",
@@ -155,7 +156,8 @@
                                 "weight": 0,
                                 "disabled": false
                             }
-                        }
+                        },
+                        "language": "und"
                     },
                     {
                         "source": "dependencies",
@@ -175,7 +177,14 @@
                                 "weight": 0,
                                 "disabled": false
                             }
-                        }
+                        },
+                        "language": "und"
+                    },
+                    {
+                        "source": "pulls",
+                        "target": "field_open_prs",
+                        "unique": false,
+                        "language": "und"
                     }
                 ],
                 "insert_new": "1",
