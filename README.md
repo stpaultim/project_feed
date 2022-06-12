@@ -1,7 +1,13 @@
 Project Feed
 =====================
 
-This module pulls down contrib project data from Github and creates nodes in a Backdrop CMS website. In theory, code checks for existing node and only creates new nodes when none exist. Ability to update nodes is coming soon?
+This module will pull Backdrop CMS project data from Github into your local site.
+
+Currently, it works in two steps:
+
+1) You will fetch data from Github in 1 of 3 batches. The data is stored in a 
+   CSV file on the server.
+2) You will import data from CSV file using feeds.
 
 This module is a result of the discussion started here:
 https://github.com/backdrop-ops/backdropcms.org/issues/870
@@ -11,15 +17,14 @@ by @BWPanda in that thread.
 
 This modules is still very much in development. We welcome feedback and suggestions and Pull Requests.
 
-This module is somewhat a proof a concept and sandbox for possible features on BackdropCMS.org and/or another third party module info site.
+This module is somewhat a proof a concept and sandbox for possible features on BackdropCMS.org 
+and/or another third party module info site.
 
 Coming Soon (ideas)
 -------------
 
-- Pulling in "tag" data from project .info file
 - Pulling in additional data about Releases
 - Pulling in additional download statistics
-- Ability to update nodes
 
 Requirements
 ------------
@@ -42,9 +47,15 @@ Instructions:
 
 1) Enable the module
 2) Add Github User Name and Token here: admin/config/services/projects/settings
-3) Put something in the range of 10-30 in "Queries Per Pull" (This is inaccurate and will be fixed soon)
-4) Use this link to trigger a pull of projects: admin/config/services/projects/settings/pull_projects 
+3) Use one of these three triggers to download data from Github
+     - admin/config/services/projects/settings/pull_projects_1
+     - admin/config/services/projects/settings/pull_projects_2
+     - admin/config/services/projects/settings/pull_projects_3
+4) After each download, pull data into site with Feeds Importer "Backdrop Projects"
+   Must list location for import of csv file as: `public://project-list.csv`
 
+
+http://project-feed.lndo.site/admin/config/services/projects/settings/pull_projects_1
 
 Issues
 ------

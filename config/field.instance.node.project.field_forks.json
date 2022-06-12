@@ -1,11 +1,11 @@
 {
-    "_config_name": "field.instance.node.project.field_releases",
-    "field_name": "field_releases",
+    "_config_name": "field.instance.node.project.field_forks",
+    "field_name": "field_forks",
     "entity_type": "node",
     "bundle": "project",
-    "label": "Releases",
+    "label": "Forks",
     "widget": {
-        "weight": "12",
+        "weight": "13",
         "type": "number",
         "module": "number",
         "active": 0,
@@ -27,7 +27,7 @@
         "default": {
             "label": "inline",
             "type": "number_integer",
-            "weight": "8",
+            "weight": "11",
             "settings": {
                 "thousand_separator": "",
                 "decimal_separator": ".",

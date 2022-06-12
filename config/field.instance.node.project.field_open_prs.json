@@ -1,16 +1,16 @@
 {
-    "_config_name": "field.instance.node.project.field_project_type",
-    "field_name": "field_project_type",
+    "_config_name": "field.instance.node.project.field_open_prs",
+    "field_name": "field_open_prs",
     "entity_type": "node",
     "bundle": "project",
-    "label": "Project Type",
+    "label": "Open PRs",
     "widget": {
-        "weight": "9",
-        "type": "options_select",
-        "module": "options",
+        "weight": "17",
+        "type": "text_textfield",
+        "module": "text",
         "active": 1,
         "settings": {
-            "use_select2": false
+            "size": "60"
         }
     },
     "description": "",
@@ -19,15 +19,16 @@
     "default_value": null,
     "default_value_function": null,
     "settings": {
+        "text_processing": "0",
         "user_register_form": false
     },
     "display": {
         "default": {
             "label": "inline",
-            "type": "taxonomy_term_reference_link",
-            "weight": "1",
+            "type": "text_plain",
+            "weight": "10",
             "settings": [],
-            "module": "taxonomy"
+            "module": "text"
         }
     }
 }

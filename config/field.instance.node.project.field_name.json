@@ -1,11 +1,11 @@
 {
-    "_config_name": "field.instance.node.project.field_package",
-    "field_name": "field_package",
+    "_config_name": "field.instance.node.project.field_name",
+    "field_name": "field_name",
     "entity_type": "node",
     "bundle": "project",
-    "label": "Package",
+    "label": "Name",
     "widget": {
-        "weight": "6",
+        "weight": "14",
         "type": "text_textfield",
         "module": "text",
         "active": 1,
@@ -24,11 +24,10 @@
     },
     "display": {
         "default": {
-            "label": "inline",
-            "type": "text_default",
-            "weight": "4",
-            "settings": [],
-            "module": "text"
+            "label": "hidden",
+            "type": "hidden",
+            "weight": "16",
+            "settings": []
         }
     }
 }

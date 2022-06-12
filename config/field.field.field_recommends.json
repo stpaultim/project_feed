@@ -1,18 +1,18 @@
 {
-    "_config_name": "field.field.field_maintainer",
-    "field_name": "field_maintainer",
+    "_config_name": "field.field.field_recommends",
+    "field_name": "field_recommends",
     "type": "taxonomy_term_reference",
     "translatable": false,
     "module": "taxonomy",
     "active": 1,
     "locked": 0,
-    "cardinality": "-1",
+    "cardinality": 1,
     "deleted": 0,
     "entity_types": [],
     "settings": {
         "allowed_values": [
             {
-                "vocabulary": "maintainer",
+                "vocabulary": "projects",
                 "parent": "0"
             }
         ]
