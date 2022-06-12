@@ -1,6 +1,6 @@
 {
-    "_config_name": "field.field.field_project_type",
-    "field_name": "field_project_type",
+    "_config_name": "field.field.field_dependencies",
+    "field_name": "field_dependencies",
     "type": "taxonomy_term_reference",
     "translatable": false,
     "module": "taxonomy",
@@ -12,13 +12,10 @@
     "settings": {
         "allowed_values": [
             {
-                "vocabulary": "project_type",
+                "vocabulary": "projects",
                 "parent": "0"
             }
-        ],
-        "field_permissions": {
-            "type": "2"
-        }
+        ]
     },
     "storage": {
         "type": "field_sql_storage",

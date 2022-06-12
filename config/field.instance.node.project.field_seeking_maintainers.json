@@ -1,0 +1,42 @@
+{
+    "_config_name": "field.instance.node.project.field_seeking_maintainers",
+    "field_name": "field_seeking_maintainers",
+    "entity_type": "node",
+    "bundle": "project",
+    "label": "Seeking Maintainers",
+    "widget": {
+        "weight": "1",
+        "type": "options_onoff",
+        "module": "options",
+        "active": 1,
+        "settings": {
+            "display_label": 1
+        }
+    },
+    "description": "This project is seeking additional maintainers",
+    "required": 0,
+    "deleted": 0,
+    "default_value": [
+        {
+            "value": 0
+        }
+    ],
+    "default_value_function": null,
+    "settings": {
+        "user_register_form": false
+    },
+    "display": {
+        "default": {
+            "label": "inline",
+            "type": "boolean_yes_no",
+            "weight": "3",
+            "settings": {
+                "format": "yes-no",
+                "custom_on": "",
+                "custom_off": "",
+                "reverse": 0
+            },
+            "module": "list"
+        }
+    }
+}

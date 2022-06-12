@@ -1,11 +1,11 @@
 {
-    "_config_name": "field.instance.node.project.field_name",
-    "field_name": "field_name",
+    "_config_name": "field.instance.node.project.field_open_prs",
+    "field_name": "field_open_prs",
     "entity_type": "node",
     "bundle": "project",
-    "label": "Name",
+    "label": "Open PRs",
     "widget": {
-        "weight": "14",
+        "weight": "17",
         "type": "text_textfield",
         "module": "text",
         "active": 1,
@@ -24,10 +24,11 @@
     },
     "display": {
         "default": {
-            "label": "hidden",
-            "type": "hidden",
-            "weight": "16",
-            "settings": []
+            "label": "inline",
+            "type": "text_plain",
+            "weight": "10",
+            "settings": [],
+            "module": "text"
         }
     }
 }

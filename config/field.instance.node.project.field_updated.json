@@ -3,9 +3,9 @@
     "field_name": "field_updated",
     "entity_type": "node",
     "bundle": "project",
-    "label": "Updated",
+    "label": "Recent Commit",
     "widget": {
-        "weight": "6",
+        "weight": "8",
         "type": "date_text",
         "module": "date",
         "active": 1,
@@ -33,8 +33,9 @@
     },
     "display": {
         "default": {
-            "label": "hidden",
+            "label": "inline",
             "type": "date_default",
+            "weight": "12",
             "settings": {
                 "format_type": "long",
                 "multiple_number": "",
@@ -43,8 +44,7 @@
                 "fromto": "both",
                 "show_remaining_days": false
             },
-            "module": "date",
-            "weight": 4
+            "module": "date"
         }
     }
 }

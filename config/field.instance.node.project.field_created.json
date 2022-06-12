@@ -5,7 +5,7 @@
     "bundle": "project",
     "label": "Created",
     "widget": {
-        "weight": "5",
+        "weight": "7",
         "type": "date_text",
         "module": "date",
         "active": 1,
@@ -33,8 +33,9 @@
     },
     "display": {
         "default": {
-            "label": "hidden",
+            "label": "inline",
             "type": "date_default",
+            "weight": "13",
             "settings": {
                 "format_type": "long",
                 "multiple_number": "",
@@ -43,8 +44,7 @@
                 "fromto": "both",
                 "show_remaining_days": false
             },
-            "module": "date",
-            "weight": 3
+            "module": "date"
         }
     }
 }

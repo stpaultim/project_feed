@@ -1,17 +1,14 @@
 {
-    "_config_name": "field.instance.node.project.field_project_type",
-    "field_name": "field_project_type",
+    "_config_name": "field.instance.node.project.field_recommends",
+    "field_name": "field_recommends",
     "entity_type": "node",
     "bundle": "project",
-    "label": "Project Type",
+    "label": "Recommends",
     "widget": {
-        "weight": "9",
         "type": "options_select",
-        "module": "options",
-        "active": 1,
-        "settings": {
-            "use_select2": false
-        }
+        "weight": "18",
+        "settings": [],
+        "module": "options"
     },
     "description": "",
     "required": 0,
@@ -23,11 +20,11 @@
     },
     "display": {
         "default": {
-            "label": "inline",
+            "label": "hidden",
             "type": "taxonomy_term_reference_link",
-            "weight": "1",
             "settings": [],
-            "module": "taxonomy"
+            "module": "taxonomy",
+            "weight": 17
         }
     }
 }

@@ -1,18 +1,18 @@
 {
-    "_config_name": "field.field.field_project_type",
-    "field_name": "field_project_type",
+    "_config_name": "field.field.field_community_tags",
+    "field_name": "field_community_tags",
     "type": "taxonomy_term_reference",
     "translatable": false,
     "module": "taxonomy",
     "active": 1,
     "locked": 0,
-    "cardinality": "1",
+    "cardinality": "-1",
     "deleted": 0,
     "entity_types": [],
     "settings": {
         "allowed_values": [
             {
-                "vocabulary": "project_type",
+                "vocabulary": "tags",
                 "parent": "0"
             }
         ],

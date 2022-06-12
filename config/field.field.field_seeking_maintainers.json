@@ -1,9 +1,9 @@
 {
-    "_config_name": "field.field.field_project_type",
-    "field_name": "field_project_type",
-    "type": "taxonomy_term_reference",
+    "_config_name": "field.field.field_seeking_maintainers",
+    "field_name": "field_seeking_maintainers",
+    "type": "list_boolean",
     "translatable": false,
-    "module": "taxonomy",
+    "module": "list",
     "active": 1,
     "locked": 0,
     "cardinality": "1",
@@ -11,11 +11,10 @@
     "entity_types": [],
     "settings": {
         "allowed_values": [
-            {
-                "vocabulary": "project_type",
-                "parent": "0"
-            }
+            "No",
+            "Yes"
         ],
+        "allowed_values_function": "",
         "field_permissions": {
             "type": "2"
         }

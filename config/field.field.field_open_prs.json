@@ -1,23 +1,18 @@
 {
-    "_config_name": "field.field.field_project_type",
-    "field_name": "field_project_type",
-    "type": "taxonomy_term_reference",
+    "_config_name": "field.field.field_open_prs",
+    "field_name": "field_open_prs",
+    "type": "text",
     "translatable": false,
-    "module": "taxonomy",
+    "module": "text",
     "active": 1,
     "locked": 0,
     "cardinality": "1",
     "deleted": 0,
     "entity_types": [],
     "settings": {
-        "allowed_values": [
-            {
-                "vocabulary": "project_type",
-                "parent": "0"
-            }
-        ],
+        "max_length": "255",
         "field_permissions": {
-            "type": "2"
+            "type": "0"
         }
     },
     "storage": {

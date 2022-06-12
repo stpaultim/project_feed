@@ -1,19 +1,19 @@
 {
-    "_config_name": "field.instance.node.project.field_name",
-    "field_name": "field_name",
+    "_config_name": "field.instance.node.project.field_editor_notes",
+    "field_name": "field_editor_notes",
     "entity_type": "node",
     "bundle": "project",
-    "label": "Name",
+    "label": "Community Notes",
     "widget": {
-        "weight": "14",
-        "type": "text_textfield",
+        "weight": "15",
+        "type": "text_textarea",
         "module": "text",
         "active": 1,
         "settings": {
-            "size": "60"
+            "rows": "5"
         }
     },
-    "description": "",
+    "description": "Special notes entered by community editors.",
     "required": 0,
     "deleted": 0,
     "default_value": null,
@@ -25,9 +25,10 @@
     "display": {
         "default": {
             "label": "hidden",
-            "type": "hidden",
-            "weight": "16",
-            "settings": []
+            "type": "text_default",
+            "weight": "15",
+            "settings": [],
+            "module": "text"
         }
     }
 }

@@ -5,7 +5,7 @@
     "bundle": "project",
     "label": "Forks",
     "widget": {
-        "weight": "11",
+        "weight": "13",
         "type": "number",
         "module": "number",
         "active": 0,
@@ -25,16 +25,16 @@
     },
     "display": {
         "default": {
-            "label": "hidden",
+            "label": "inline",
             "type": "number_integer",
+            "weight": "11",
             "settings": {
                 "thousand_separator": "",
                 "decimal_separator": ".",
                 "scale": 0,
                 "prefix_suffix": true
             },
-            "module": "number",
-            "weight": 10
+            "module": "number"
         }
     }
 }

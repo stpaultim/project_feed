@@ -43,7 +43,8 @@
                         "source": "title",
                         "target": "field_name",
                         "unique": false,
-                        "language": "und"
+                        "language": "und",
+                        "tampers": []
                     },
                     {
                         "source": "body",
@@ -122,20 +123,59 @@
                         "term_search": "0",
                         "autocreate": 1,
                         "tampers": {
-                            "explode": {
+                            "explode_tags": {
                                 "plugin_id": "explode",
                                 "settings": {
                                     "separator": ",",
-                                    "limit": 10,
+                                    "limit": "",
                                     "real_separator": ","
                                 },
-                                "description": "Explode",
-                                "id": "explode",
+                                "description": "Explode tags",
+                                "id": "explode_tags",
                                 "weight": 0,
                                 "disabled": false
                             }
-                        },
-                        "language": "und"
+                        }
+                    },
+                    {
+                        "source": "recommends",
+                        "target": "field_recommends",
+                        "term_search": "0",
+                        "autocreate": 1,
+                        "tampers": {
+                            "explode_recommends": {
+                                "plugin_id": "explode",
+                                "settings": {
+                                    "separator": ",",
+                                    "limit": "",
+                                    "real_separator": ","
+                                },
+                                "description": "Explode recommends",
+                                "id": "explode_recommends",
+                                "weight": 0,
+                                "disabled": false
+                            }
+                        }
+                    },
+                    {
+                        "source": "dependencies",
+                        "target": "field_dependencies",
+                        "term_search": "0",
+                        "autocreate": 1,
+                        "tampers": {
+                            "explode_dependencies": {
+                                "plugin_id": "explode",
+                                "settings": {
+                                    "separator": ",",
+                                    "limit": "",
+                                    "real_separator": ","
+                                },
+                                "description": "Explode dependencies",
+                                "id": "explode_dependencies",
+                                "weight": 0,
+                                "disabled": false
+                            }
+                        }
                     }
                 ],
                 "insert_new": "1",

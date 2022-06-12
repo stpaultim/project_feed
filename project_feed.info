@@ -17,6 +17,8 @@ dependencies[] = feeds_ui
 dependencies[] = feeds_import
 dependencies[] = job_scheduler
 dependencies[] = feeds_tamper
+dependencies[] = views_conditional
+
 
 ; Find suggested packages and tags at: https://docs.backdropcms.org/documentation/module-packages-and-tags
 package = User interface

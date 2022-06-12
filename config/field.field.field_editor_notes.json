@@ -1,21 +1,15 @@
 {
-    "_config_name": "field.field.field_project_type",
-    "field_name": "field_project_type",
-    "type": "taxonomy_term_reference",
+    "_config_name": "field.field.field_editor_notes",
+    "field_name": "field_editor_notes",
+    "type": "text_long",
     "translatable": false,
-    "module": "taxonomy",
+    "module": "text",
     "active": 1,
     "locked": 0,
     "cardinality": "1",
     "deleted": 0,
     "entity_types": [],
     "settings": {
-        "allowed_values": [
-            {
-                "vocabulary": "project_type",
-                "parent": "0"
-            }
-        ],
         "field_permissions": {
             "type": "2"
         }

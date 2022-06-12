@@ -14,7 +14,6 @@
  * Implements hook_config_info().
  */
 
-// @TODO - What does this do?
 function project_feed_config_info() {
   $prefixes['project_feed.settings'] = array(
     'label' => t('github API settings'),
@@ -95,7 +94,6 @@ function project_feed_code($var) {
   $projects_added = 0;        // Keeps track of new project nodes
   $debug = 0;                 // Used for debugging
 
-
   $project_name = 'project_list.csv';               
   $txt = '';
   $file = file_save_data($txt,'public://' . "project-list.csv", FILE_EXISTS_REPLACE);
@@ -129,7 +127,7 @@ function project_feed_code($var) {
 
     // Get information about Backdrop Contrib repos 
     // @TODO "queries per pull" should be "projects per query"
-    $ch = curl_init('https://api.github.com/orgs/backdrop-contrib/repos?per_page=100&page=' . $page_counter);
+    $ch = curl_init('https://api.github.com/orgs/backdrop-contrib/repos?per_page=43&page=' . $page_counter);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
       'Accept: application/vnd.github.VERSION.raw',
       'User-Agent: ' . $pf_user_agent,
@@ -235,14 +233,27 @@ function project_feed_code($var) {
 
     // Creates nodes for projects that don't have one already
     foreach ($data as $value) { 
+
+      // Reset Variables
+      $recommend_list = '';
+      $dependency_list = '';
+      $tag_list = '';
+
       $temp_tag = taxonomy_term_load_multiple_by_name($value['type_tid'], 'project_type');
       $term_tid = array_keys($temp_tag);
       if (isset($term_tid[0])) {
         $field_project_type = $term_tid[0];
       }
-
-      $tag_list = implode(', ' ,$value['tags']);
-
+      if (!empty($value['tags'])) {
+        $tag_list = implode(', ' ,$value['tags']);
+      }
+      if (!empty($value['dependencies'])) {
+        dpm($value['dependencies']);
+        $dependency_list = implode(', ' ,$value['dependencies']);
+      }
+      if (!empty($value['recommends'])) {
+        $recommend_list = implode(', ' ,$value['recommends']);
+      }
       $project = array(
         'title' => $value['title'],
         'github_name' => $value['name'],
@@ -252,8 +263,8 @@ function project_feed_code($var) {
         'backdrop' => $value['backdrop'],
         'screenshot' => $value['screenshot'],
         'field_package' => $value['package'],
-        'dependencies' => $value['dependencies'],
-        'recommends' => $value['recommends'],
+        'dependencies' => $dependency_list,
+        'recommends' => $recommend_list,
         'field_updated' => strtotime($value['updated']),
         'field_created' => strtotime($value['created']),
         'field_github' => $value['field_github'],
@@ -263,6 +274,7 @@ function project_feed_code($var) {
         'open_issues' => $value['open_issues_count'],
         'forks' => $value['forks'],
       );
+      $next_line = implode(', ', $project);
       fputcsv($txt, $project);
       $projects_added++;
     }

@@ -1,11 +1,11 @@
 {
-    "_config_name": "field.instance.node.project.field_tags_maintainer",
-    "field_name": "field_tags_maintainer",
+    "_config_name": "field.instance.node.project.field_community_tags",
+    "field_name": "field_community_tags",
     "entity_type": "node",
     "bundle": "project",
-    "label": "Tags (Maintainer)",
+    "label": "Community Tags",
     "widget": {
-        "weight": "4",
+        "weight": "3",
         "type": "options_select",
         "module": "options",
         "active": 1,
@@ -13,19 +13,28 @@
             "use_select2": false
         }
     },
-    "description": "Please enter the names of one or more maintainers for this module. This is an auto-complete field, feel free to enter new names. Seperate names with a comma. ",
+    "description": "",
     "required": 0,
     "deleted": 0,
     "default_value": null,
     "default_value_function": null,
     "settings": {
+        "select2_integration": {
+            "use_select2": 1,
+            "styling": {
+                "placeholder": "",
+                "dropdownAutoWidth": 0
+            },
+            "allow_add_onfly": 1,
+            "show_voc_terms_page_link": 0
+        },
         "user_register_form": false
     },
     "display": {
         "default": {
-            "label": "above",
+            "label": "inline",
             "type": "taxonomy_term_reference_link",
-            "weight": "7",
+            "weight": "14",
             "settings": [],
             "module": "taxonomy"
         }
