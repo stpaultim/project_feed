@@ -129,7 +129,7 @@ function project_feed_code($var) {
 
     // Get information about Backdrop Contrib repos 
     // @TODO "queries per pull" should be "projects per query"
-    $ch = curl_init('https://api.github.com/orgs/backdrop-contrib/repos?per_page=20&page=' . $page_counter);
+    $ch = curl_init('https://api.github.com/orgs/backdrop-contrib/repos?per_page=100&page=' . $page_counter);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
       'Accept: application/vnd.github.VERSION.raw',
       'User-Agent: ' . $pf_user_agent,
@@ -143,7 +143,7 @@ function project_feed_code($var) {
     // Originally used to limit the number of queries during testing
     // May not be necessary in future.
 
-    if (!$repos || $query_counter > 1) {
+    if (!$repos || $query_counter > 3) {
       $projects_available = FALSE;
     } 
 
