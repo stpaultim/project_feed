@@ -8,10 +8,7 @@
         "weight": "4",
         "type": "options_select",
         "module": "options",
-        "active": 1,
-        "settings": {
-            "use_select2": false
-        }
+        "active": 1
     },
     "description": "Please enter the names of one or more maintainers for this module. This is an auto-complete field, feel free to enter new names. Seperate names with a comma. ",
     "required": 0,
