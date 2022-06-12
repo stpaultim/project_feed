@@ -8,7 +8,9 @@
  * 
  */
 
-
+// Check user status on Github API
+//
+// curl -i -u <username>:<token> https://api.github.com/user
 
 /**
  * Implements hook_config_info().
@@ -92,7 +94,6 @@ function project_feed_code($var) {
   $query_counter = 0;         // Counter to limit number of Github requests
   $page_counter = $var;          // Use to keep track of current page of projects
   $projects_added = 0;        // Keeps track of new project nodes
-  $debug = 0;                 // Used for debugging
 
   $project_name = 'project_list.csv';               
   $txt = '';
@@ -115,6 +116,7 @@ function project_feed_code($var) {
     'tags',
     'home',
     'releases',
+    'pulls',
     'open_issues',
     'forks',
   );
@@ -177,10 +179,25 @@ function project_feed_code($var) {
       curl_close($ch);
       $info = backdrop_parse_info_format($response);
 
+      // Check and count releases and report back
       if (isset($repo['releases_url'])) {
         $var = $repo['name'];
         $releases = project_feed_check_releases($var);
         $data[$repo['name']]['releases'] = $releases;
+      } 
+
+      // Check and count open PRs and report back
+      if (isset($repo['pulls_url'])) {
+        $var = $repo['name'];
+        $pulls = project_feed_check_pulls($var);
+        $data[$repo['name']]['pulls'] = $pulls;
+      } 
+
+      // Check and count open issues and report back
+      if (isset($repo['issues_url'])) {
+        $var = $repo['name'];
+        $pulls = project_feed_check_issues($var);
+        $data[$repo['name']]['issues'] = $pulls;
       } 
 
       // Pulls data from .info file into array for new node.
@@ -271,7 +288,8 @@ function project_feed_code($var) {
         'tags' => $tag_list,
         'field_home' => $value['field_home'],
         'field_releases' => $value['releases'],
-        'open_issues' => $value['open_issues_count'],
+        'open_pulls' => $value['pulls'],
+        'open_issues' => $value['issues'],
         'forks' => $value['forks'],
       );
       $next_line = implode(', ', $project);
@@ -282,7 +300,7 @@ function project_feed_code($var) {
     $page_counter++;
   }
   fclose($txt);
-  backdrop_set_message('Projects data from Github has been written to CSV file. Import coming soon.', 'info');
+  backdrop_set_message('Projects data from Github has been written to CSV file. Use the Backdrop Project importer "feeds" to pull date into site.', 'info');
 }
 
 // Check for releases
@@ -292,7 +310,6 @@ function project_feed_check_releases($var) {
   // Putting config settings into variables.
   $pf_user_agent = $config->get('username');
   $pf_github_token = $config->get('github_auth_token');
-  $pf_queries_per_pull = $config->get('queries_per_pull');
 
   $ch = curl_init('https://api.github.com/repos/backdrop-contrib/' . $var .'/releases');
   curl_setopt($ch, CURLOPT_HTTPHEADER, array(
@@ -306,5 +323,51 @@ function project_feed_check_releases($var) {
   $release_info = json_decode($response, TRUE);
 
   $var = count($release_info);
+  return($var);
+}
+
+// Check for PRs
+function project_feed_check_pulls($var) {
+  $config = config('project_feed.settings');
+
+  // Putting config settings into variables.
+  $pf_user_agent = $config->get('username');
+  $pf_github_token = $config->get('github_auth_token');
+
+  $ch = curl_init('https://api.github.com/repos/backdrop-contrib/' . $var .'/pulls');
+  curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+    'Accept: application/vnd.github.VERSION.raw',
+    'User-Agent: ' . $pf_user_agent,
+    'Authorization: token ' . $pf_github_token,
+  ));
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+  $responses = curl_exec($ch);
+  curl_close($ch);
+  $pull_info = json_decode($responses, TRUE);
+
+  $var = count($pull_info);
+  return($var);
+}
+
+// Check for Issues
+function project_feed_check_issues($var) {
+  $config = config('project_feed.settings');
+
+  // Putting config settings into variables.
+  $pf_user_agent = $config->get('username');
+  $pf_github_token = $config->get('github_auth_token');
+
+  $ch = curl_init('https://api.github.com/repos/backdrop-contrib/' . $var .'/issues');
+  curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+    'Accept: application/vnd.github.VERSION.raw',
+    'User-Agent: ' . $pf_user_agent,
+    'Authorization: token ' . $pf_github_token,
+  ));
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+  $responses = curl_exec($ch);
+  curl_close($ch);
+  $issue_info = json_decode($responses, TRUE);
+
+  $var = count($issue_info);
   return($var);
 }

@@ -15,10 +15,7 @@
                 "vocabulary": "maintainer",
                 "parent": "0"
             }
-        ],
-        "field_permissions": {
-            "type": "0"
-        }
+        ]
     },
     "storage": {
         "type": "field_sql_storage",

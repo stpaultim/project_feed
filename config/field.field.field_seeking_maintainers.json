@@ -14,10 +14,7 @@
             "No",
             "Yes"
         ],
-        "allowed_values_function": "",
-        "field_permissions": {
-            "type": "2"
-        }
+        "allowed_values_function": ""
     },
     "storage": {
         "type": "field_sql_storage",
