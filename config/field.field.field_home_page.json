@@ -9,6 +9,7 @@
     "cardinality": "1",
     "deleted": 0,
     "entity_types": [],
+    "settings": [],
     "storage": {
         "type": "field_sql_storage",
         "settings": [],
