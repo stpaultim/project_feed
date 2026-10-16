@@ -5,7 +5,7 @@
     "bundle": "project",
     "label": "Home page",
     "widget": {
-        "weight": "10",
+        "weight": "8",
         "type": "link_field",
         "module": "link",
         "active": 0,
@@ -40,11 +40,11 @@
     },
     "display": {
         "default": {
-            "label": "inline",
+            "label": "hidden",
             "type": "link_default",
-            "weight": "5",
             "settings": [],
-            "module": "link"
+            "module": "link",
+            "weight": 6
         }
     }
 }

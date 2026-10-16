@@ -5,13 +5,11 @@
     "bundle": "project",
     "label": "Project Type",
     "widget": {
-        "weight": "9",
+        "weight": "7",
         "type": "options_select",
         "module": "options",
         "active": 1,
-        "settings": {
-            "use_select2": false
-        }
+        "settings": []
     },
     "description": "",
     "required": 0,
@@ -23,11 +21,11 @@
     },
     "display": {
         "default": {
-            "label": "inline",
+            "label": "hidden",
             "type": "taxonomy_term_reference_link",
-            "weight": "1",
             "settings": [],
-            "module": "taxonomy"
+            "module": "taxonomy",
+            "weight": 5
         }
     }
 }

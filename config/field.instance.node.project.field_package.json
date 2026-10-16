@@ -5,7 +5,7 @@
     "bundle": "project",
     "label": "Package",
     "widget": {
-        "weight": "6",
+        "weight": "4",
         "type": "text_textfield",
         "module": "text",
         "active": 1,
@@ -24,11 +24,11 @@
     },
     "display": {
         "default": {
-            "label": "inline",
+            "label": "hidden",
             "type": "text_default",
-            "weight": "4",
             "settings": [],
-            "module": "text"
+            "module": "text",
+            "weight": 2
         }
     }
 }

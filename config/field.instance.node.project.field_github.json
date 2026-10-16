@@ -5,7 +5,7 @@
     "bundle": "project",
     "label": "Github",
     "widget": {
-        "weight": "11",
+        "weight": "9",
         "type": "link_field",
         "module": "link",
         "active": 0,
@@ -40,11 +40,11 @@
     },
     "display": {
         "default": {
-            "label": "inline",
+            "label": "hidden",
             "type": "link_default",
-            "weight": "6",
             "settings": [],
-            "module": "link"
+            "module": "link",
+            "weight": 7
         }
     }
 }

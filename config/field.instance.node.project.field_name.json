@@ -5,7 +5,7 @@
     "bundle": "project",
     "label": "Name",
     "widget": {
-        "weight": "14",
+        "weight": "13",
         "type": "text_textfield",
         "module": "text",
         "active": 1,
@@ -25,9 +25,10 @@
     "display": {
         "default": {
             "label": "hidden",
-            "type": "hidden",
-            "weight": "16",
-            "settings": []
+            "type": "text_default",
+            "settings": [],
+            "module": "text",
+            "weight": 12
         }
     }
 }

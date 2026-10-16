@@ -5,12 +5,13 @@
     "bundle": "project",
     "label": "Tags (Maintainer)",
     "widget": {
-        "weight": "4",
+        "weight": "12",
         "type": "options_select",
         "module": "options",
-        "active": 1
+        "active": 1,
+        "settings": []
     },
-    "description": "Please enter the names of one or more maintainers for this module. This is an auto-complete field, feel free to enter new names. Seperate names with a comma. ",
+    "description": "",
     "required": 0,
     "deleted": 0,
     "default_value": null,
@@ -20,11 +21,11 @@
     },
     "display": {
         "default": {
-            "label": "above",
+            "label": "hidden",
             "type": "taxonomy_term_reference_link",
-            "weight": "7",
             "settings": [],
-            "module": "taxonomy"
+            "module": "taxonomy",
+            "weight": 11
         }
     }
 }

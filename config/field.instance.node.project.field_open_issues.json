@@ -5,7 +5,7 @@
     "bundle": "project",
     "label": "Open Issues",
     "widget": {
-        "weight": "5",
+        "weight": "3",
         "type": "number",
         "module": "number",
         "active": 0,
@@ -25,16 +25,16 @@
     },
     "display": {
         "default": {
-            "label": "inline",
+            "label": "hidden",
             "type": "number_integer",
-            "weight": "9",
             "settings": {
                 "thousand_separator": "",
                 "decimal_separator": ".",
                 "scale": 0,
                 "prefix_suffix": true
             },
-            "module": "number"
+            "module": "number",
+            "weight": 1
         }
     }
 }
