@@ -284,13 +284,16 @@ function project_feed_fetch_page($page, $total_pages, &$context) {
  *   GitHub username for API authentication.
  * @param string $token
  *   GitHub personal access token.
+ * @param bool $force_readme
+ *   TRUE to fetch the README even if the repo hasn't been pushed since the
+ *   last fetch (used when an editor fetches a single project on demand).
  *
  * @return string
  *   'created' or 'updated'.
  *
  * @throws Exception
  */
-function project_feed_process_repo($repo, $user, $token) {
+function project_feed_process_repo($repo, $user, $token, $force_readme = FALSE) {
   // Fetch the .info file for Backdrop-specific metadata.
   $info_response = project_feed_github_request(
     'https://api.github.com/repos/backdrop-contrib/' . $repo['name'] . '/contents/' . $repo['name'] . '.info',
@@ -326,7 +329,7 @@ function project_feed_process_repo($repo, $user, $token) {
   // README (for maintainer parsing) — only fetched for new projects or repos
   // pushed since the last fetch, to stay within the GitHub rate limit.
   $readme_text = NULL;
-  if (project_feed_readme_needs_refresh($repo)) {
+  if ($force_readme || project_feed_readme_needs_refresh($repo)) {
     $readme_text = project_feed_fetch_readme($repo['name'], $user, $token);
   }
 

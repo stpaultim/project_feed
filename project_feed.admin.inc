@@ -219,9 +219,11 @@ function project_feed_fetch_single_submit($form, &$form_state) {
   project_feed_clear_fetch_error();
   $repo = json_decode($repo_response['body'], TRUE);
 
-  // Hand off to the same shared helper used by the batch process.
+  // Hand off to the same shared helper used by the batch process. Always
+  // fetch the README here so an on-demand fetch can repair missing
+  // maintainer data even when the repo hasn't been pushed recently.
   try {
-    $result = project_feed_process_repo($repo, $user, $token);
+    $result = project_feed_process_repo($repo, $user, $token, TRUE);
     backdrop_set_message(t('Project %name successfully @result.', array('%name' => $repo_name, '@result' => $result)));
   }
   catch (Exception $e) {
