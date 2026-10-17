@@ -174,6 +174,27 @@ function project_feed_settings($form, &$form_state) {
     '#validate' => array(),
   );
 
+  // --- Batch 3: Re-parse missing maintainers -------------------------------
+  $missing_count = count(project_feed_missing_maintainer_nids());
+  $form['maintainers'] = array(
+    '#type'        => 'fieldset',
+    '#title'       => t('Re-parse missing maintainers'),
+    '#description' => t(
+      'Re-fetches the README for every project with no <em>Maintainers (parsed from README)</em> '
+      . 'and parses it again. Fills the <em>Maintainer</em> field only where it is empty, so '
+      . 'hand-curated values are never changed. Does not call Claude. Makes one GitHub call per project.'
+    ) . '<br><em>' . format_plural($missing_count,
+      '1 project currently has no parsed maintainers.',
+      '@count projects currently have no parsed maintainers.'
+    ) . '</em>',
+  );
+  $form['maintainers']['maintainers_submit'] = array(
+    '#type'     => 'submit',
+    '#value'    => t('Re-parse missing maintainers'),
+    '#submit'   => array('project_feed_start_maintainer_reparse'),
+    '#validate' => array(),
+  );
+
   return $form;
 }
 

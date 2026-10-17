@@ -656,6 +656,134 @@ function project_feed_readme_analysis_finished($success, $results, $operations) 
 
 
 // ===========================================================================
+// BATCH 3 — RE-PARSE MISSING MAINTAINERS
+// ===========================================================================
+
+/**
+ * Return nids of published projects with no README-parsed maintainers.
+ *
+ * @return array
+ *   Node IDs, ordered by nid.
+ */
+function project_feed_missing_maintainer_nids() {
+  return db_query(
+    "SELECT n.nid FROM {node} n
+     LEFT JOIN {field_data_field_maintainer_parsed} p
+       ON p.entity_id = n.nid AND p.entity_type = 'node'
+     WHERE n.type = 'project' AND n.status = 1 AND p.entity_id IS NULL
+     ORDER BY n.nid"
+  )->fetchCol();
+}
+
+/**
+ * Form submit handler: start the missing-maintainers re-parse batch.
+ */
+function project_feed_start_maintainer_reparse($form, &$form_state) {
+  $pf_config = config('project_feed.settings');
+  if (!$pf_config->get('username') || !$pf_config->get('github_auth_token')) {
+    backdrop_set_message(t('GitHub credentials are required.'), 'error');
+    return;
+  }
+
+  $nids = project_feed_missing_maintainer_nids();
+  if (empty($nids)) {
+    backdrop_set_message(t('Every project already has parsed maintainers. Nothing to do.'));
+    return;
+  }
+
+  batch_set(array(
+    'operations'       => array(array('project_feed_reparse_maintainers_operation', array($nids))),
+    'finished'         => 'project_feed_reparse_maintainers_finished',
+    'title'            => t('Re-parsing missing maintainers'),
+    'init_message'     => t('Starting maintainer re-parse (@total projects)…', array('@total' => count($nids))),
+    'progress_message' => '',
+    'error_message'    => t('An error occurred during the maintainer re-parse.'),
+  ));
+}
+
+/**
+ * Batch operation: re-fetch READMEs and re-parse maintainers, a few per call.
+ *
+ * Never calls Claude and never overwrites a non-empty Maintainer field.
+ *
+ * @param array $nids
+ *   Project node IDs to process.
+ * @param array $context
+ *   Batch API context.
+ */
+function project_feed_reparse_maintainers_operation($nids, &$context) {
+  if (empty($context['sandbox'])) {
+    $context['sandbox']['current'] = 0;
+    $context['sandbox']['total']   = count($nids);
+    $context['results'] += array('processed' => 0, 'found' => 0, 'seeded' => 0, 'errors' => array());
+  }
+
+  $pf_config = config('project_feed.settings');
+  $user  = $pf_config->get('username');
+  $token = $pf_config->get('github_auth_token');
+  $total = $context['sandbox']['total'];
+
+  // Five projects per request keeps each tick short (one GitHub call each).
+  $end = min($context['sandbox']['current'] + 5, $total);
+  for ($i = $context['sandbox']['current']; $i < $end; $i++) {
+    $node = node_load($nids[$i]);
+    if ($node) {
+      // Node title is the GitHub repo machine name.
+      $readme_text = project_feed_fetch_readme($node->title, $user, $token);
+      if ($readme_text === NULL) {
+        $context['results']['errors'][] = t('Could not fetch the README for %name.', array('%name' => $node->title));
+      }
+      else {
+        $changed = project_feed_set_parsed_maintainers($node, $readme_text);
+        if (!empty($node->field_maintainer_parsed[LANGUAGE_NONE])) {
+          $context['results']['found']++;
+        }
+        if (project_feed_seed_maintainer($node)) {
+          $context['results']['seeded']++;
+          $changed = TRUE;
+        }
+        if ($changed) {
+          node_save($node);
+        }
+      }
+    }
+    $context['results']['processed']++;
+  }
+
+  $context['sandbox']['current'] = $end;
+  $context['finished'] = $total ? $end / $total : 1;
+  $context['message'] = t('Checked @done of @total projects.', array(
+    '@done'  => $end,
+    '@total' => $total,
+  ));
+}
+
+/**
+ * Batch finished callback for the missing-maintainers re-parse.
+ */
+function project_feed_reparse_maintainers_finished($success, $results, $operations) {
+  if ($success) {
+    backdrop_set_message(t('Maintainer re-parse complete: @processed projects checked, @found now have parsed maintainers, @seeded had an empty Maintainer field filled in.', array(
+      '@processed' => $results['processed'] ?? 0,
+      '@found'     => $results['found'] ?? 0,
+      '@seeded'    => $results['seeded'] ?? 0,
+    )));
+    // Cap the list so a rate-limit failure doesn't flood the page.
+    $errors = $results['errors'] ?? array();
+    foreach (array_slice($errors, 0, 10) as $error) {
+      backdrop_set_message($error, 'warning');
+    }
+    if (count($errors) > 10) {
+      backdrop_set_message(t('…and @count more README fetch errors.', array('@count' => count($errors) - 10)), 'warning');
+    }
+  }
+  else {
+    backdrop_set_message(t('Maintainer re-parse did not complete successfully.'), 'error');
+  }
+}
+
+
+// ===========================================================================
 // MAINTAINER PARSING
 // ===========================================================================
 
@@ -1032,23 +1160,40 @@ function project_feed_save_project($repo, $info, $releases_count, $open_issues, 
     project_feed_set_parsed_maintainers($node, $readme_text);
   }
 
-  // Seed the displayed (hand-curated) Maintainer field from the parsed values,
-  // but only when it is empty so editors' choices are never overwritten.
-  if (empty($node->field_maintainer[$lang]) && !empty($node->field_maintainer_parsed[$lang])) {
-    $node->field_maintainer[$lang] = array();
-    $tids = array();
-    foreach ($node->field_maintainer_parsed[$lang] as $item) {
-      // Term lookup is case-insensitive, so two values can map to one term.
-      $tid = project_feed_get_or_create_term($item['value'], 'maintainer');
-      if ($tid && !isset($tids[$tid])) {
-        $tids[$tid] = TRUE;
-        $node->field_maintainer[$lang][] = array('tid' => $tid);
-      }
-    }
-  }
+  project_feed_seed_maintainer($node);
 
   node_save($node);
   return $is_new ? 'created' : 'updated';
+}
+
+/**
+ * Seed the displayed Maintainer field from the README-parsed values.
+ *
+ * Only acts when field_maintainer is empty, so editors' choices are never
+ * overwritten.
+ *
+ * @param Node $node
+ *   Project node to update (not saved).
+ *
+ * @return bool
+ *   TRUE if field_maintainer was filled.
+ */
+function project_feed_seed_maintainer($node) {
+  $lang = LANGUAGE_NONE;
+  if (!empty($node->field_maintainer[$lang]) || empty($node->field_maintainer_parsed[$lang])) {
+    return FALSE;
+  }
+  $node->field_maintainer[$lang] = array();
+  $tids = array();
+  foreach ($node->field_maintainer_parsed[$lang] as $item) {
+    // Term lookup is case-insensitive, so two values can map to one term.
+    $tid = project_feed_get_or_create_term($item['value'], 'maintainer');
+    if ($tid && !isset($tids[$tid])) {
+      $tids[$tid] = TRUE;
+      $node->field_maintainer[$lang][] = array('tid' => $tid);
+    }
+  }
+  return !empty($node->field_maintainer[$lang]);
 }
 
 
